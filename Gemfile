@@ -25,9 +25,15 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
+gem 'uglifier', '>= 1.3.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+
+group :production do
+  # Use pg as the database for Active Record
+  gem 'pg'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
