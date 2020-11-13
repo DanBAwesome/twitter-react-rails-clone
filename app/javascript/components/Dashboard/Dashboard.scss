@@ -1,0 +1,51 @@
+body {
+    background-color: #a5e3f1;
+}
+
+#dashboard {
+    margin-top: 10px;
+
+    .card-body {
+        padding: 10px 12px !important;
+    }
+
+    #user {
+        .username {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .handle {
+            font-size: 0.8rem;
+            color: #353535;
+        }
+    }
+
+    #trending {
+        .heading {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #a2a2a2;
+            margin-bottom: 10px;
+        }
+
+        a {
+            display: block;
+            font-size: 0.9rem;
+            line-height: 1.2rem;
+        }
+    }
+
+    #tweetSection {
+        padding: 0 !important;
+
+        * {
+            font-size: 0.9rem;
+        }
+    }
+
+    #createTweet {
+        background-color: #b7d9ec;
+        padding: 10px 20px;
+    }
+}

@@ -1,0 +1,33 @@
+.image-swap-enter {
+    opacity: 0
+}
+
+.image-swap-enter-active {
+    opacity: 1;
+    transition: opacity 2s;
+}
+
+.image-swap-exit {
+    opacity: 1;
+}
+
+.image-swap-exit-active {
+    opacity: 0;
+    transition: opacity 2s;
+}
+
+.image-swap-exit-done {
+    opacity: 0;
+}
+
+.img-lg {
+    min-height: 100vh;
+    min-width: 100vw;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    z-index: -1;
+}
+
+
