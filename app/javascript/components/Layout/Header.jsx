@@ -33,7 +33,7 @@ const Header = (props) => {
                                 </NavDropdown.Item>
                             </NavDropdown>
                             ) : (
-                                <NavDropdown alignRight title={`Language:${selectedLanguage}`} id="languageDropdown" >
+                                <NavDropdown alignRight title={`Language: ${selectedLanguage}`} id="languageDropdown" >
                                     { languages.map((language, i) => {
                                         return <NavDropdown.Item onClick={() => setSelectedLanguage(language)} key={language}>{language}</NavDropdown.Item>
                                     })}

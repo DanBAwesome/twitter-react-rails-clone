@@ -7,7 +7,6 @@ import Requests from './Requests';
 import Header from '../Layout/Header';
 
 const ProtectedComponent = (props, ...rest) => {
-    console.log(props);
     return (
         <Route {...rest} render={({ location }) => (
             props.authenticated ? (
@@ -52,6 +51,9 @@ class Routing extends React.Component {
             
             if (!user.authenticated) {
                 this.props.history.replace('/login');
+            }
+            else {
+                this.props.history.replace('/');
             }
 
         }).finally(() => {

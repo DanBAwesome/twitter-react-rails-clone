@@ -5,7 +5,7 @@ import Dunes from "@img/dunes.png";
 import Bird from "@img/bird.png";
 import "./Login.scss";
 import { Button, Card, Form, FormControl, FormGroup } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import Auth from '../Shared/Auth';
 
 class Login extends React.Component {
     constructor(props) {
@@ -28,7 +28,6 @@ class Login extends React.Component {
         this.signUp = this.signUp.bind(this);
         this.updateLoginInfo = this.updateLoginInfo.bind(this);
         this.updateSignUpInfo = this.updateSignUpInfo.bind(this);
-        console.log(this.props)
     }
 
     updateLoginInfo(event) {
@@ -50,19 +49,11 @@ class Login extends React.Component {
     login(event) {
         let { username, password } = this.state.login;
         event.preventDefault();
-        const data = new FormData();
-
-        data.append('user[username]', username);
-        data.append('user[password]', password);
-
-        Requests.post('/sessions', data).then(
-            (response) => {
-                console.log(response.success);
-                if (response.success) {
-                    this.props.history.replace('/')
-                }
+        Auth.SignIn(username, password).then((success) => {
+            if (success) {
+                this.props.history.replace('/');
             }
-        );
+        });
     }
 
     signUp(event) {
@@ -75,7 +66,11 @@ class Login extends React.Component {
         data.append('user[password]', password);
 
         Requests.post('/users', data).then(() => {
-            this.login()
+            Auth.SignIn(username, password).then((success) => {
+                if (success) {
+                    this.props.history.replace('/')
+                }
+            })
         })
     }
 

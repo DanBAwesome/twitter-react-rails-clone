@@ -8,7 +8,6 @@ class Protected extends React.Component {
 
     componentDidMount() {
         Requests.get("/authenticated").then((response) => {
-            console.log(response);
             if (!response.authenticated) {
                 this.props.history.replace('/login');
             }
