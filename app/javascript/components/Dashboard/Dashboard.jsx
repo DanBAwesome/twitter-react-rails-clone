@@ -52,7 +52,8 @@ class Dashboard extends React.Component {
             tweets: [],
             selectedUser: '',
             tweetMessage: '',
-            tweetImage: null
+            tweetImage: null,
+            imagePreview: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -87,9 +88,7 @@ class Dashboard extends React.Component {
     }
 
     imageSelect(event) {
-        this.setState({ tweetImage: event.target.files[0] });
-
-        console.log(event.target.files[0]);
+        this.setState({ tweetImage: event.target.files[0], imagePreview: URL.createObjectURL(event.target.files[0]) });
     }
 
     createTweet(event) {
@@ -99,12 +98,18 @@ class Dashboard extends React.Component {
         const data = new FormData();
 
         data.append('tweet[message]', tweetMessage);
-        data.append('tweet[image]', tweetImage, tweetImage.name);
+        if (tweetImage) {
+            data.append('tweet[image]', tweetImage, tweetImage.name);
+        }
 
         Requests.post("/tweets", data).then(
             (data) => {
                 this.getTweets();
-                this.setState({ tweetMessage: '' })
+                this.setState({
+                    tweetMessage: '',
+                    tweetImage: null,
+                    tweetPreview: null
+                })
             }
         );
     }
@@ -126,8 +131,6 @@ class Dashboard extends React.Component {
 
     componentDidMount() {
         this._isMounted = true
-        console.log(this.props)
-        console.log("a")
         this.getTweets();
     }
 
@@ -136,10 +139,9 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        const { tweets, tweetMessage, tweetImage, selectedUser } = this.state;
+        const { tweets, tweetMessage, tweetImage, selectedUser, imagePreview } = this.state;
         const { username } = this.props.user ?? this.props;
 
-        console.log(this.props)
         return (
             <React.Fragment>
                 <div className="container" id="dashboard">
@@ -181,10 +183,11 @@ class Dashboard extends React.Component {
                                     <div className="col-12">
                                         <div className="float-right row">
                                             <input id="fileUpload" type="file"
-                                                hidden onChange={this.imageSelect} />
+                                                hidden onChange={this.imageSelect}
+                                                accept="image/*" />
                                             <label htmlFor="fileUpload"
                                                 className="m-auto font-weight-bold">Upload Image</label> &nbsp;
-                                            {tweetImage && <img src={`#${tweetImage.name}`} />}
+                                            {tweetImage && <img width="32" height="32" src={imagePreview} />}
                                             <div className="m-auto">{160 - tweetMessage.length}</div> &nbsp;&nbsp;
                                             <Button type="submit" disabled={!tweetMessage}>Tweet</Button>
                                         </div>

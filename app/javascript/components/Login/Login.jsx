@@ -5,7 +5,7 @@ import Dunes from "@img/dunes.png";
 import Bird from "@img/bird.png";
 import "./Login.scss";
 import { Button, Card, Form, FormControl, FormGroup } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import Auth from '../Shared/Auth';
 
 class Login extends React.Component {
     constructor(props) {
@@ -28,7 +28,6 @@ class Login extends React.Component {
         this.signUp = this.signUp.bind(this);
         this.updateLoginInfo = this.updateLoginInfo.bind(this);
         this.updateSignUpInfo = this.updateSignUpInfo.bind(this);
-        console.log(this.props)
     }
 
     updateLoginInfo(event) {

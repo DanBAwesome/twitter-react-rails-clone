@@ -2,12 +2,10 @@ import React from 'react';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Login/Login';
-import Auth from './Auth';
 import Requests from './Requests';
 import Header from '../Layout/Header';
 
 const ProtectedComponent = (props, ...rest) => {
-    console.log(props);
     return (
         <Route {...rest} render={({ location }) => (
             props.authenticated ? (
