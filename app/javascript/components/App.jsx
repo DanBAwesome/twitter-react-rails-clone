@@ -8,23 +8,11 @@ import './App.scss';
 
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            authenticated: false
-        }
-
-    }
-
-    componentDidMount() {
-    }
-
     render() {
-        const { authenticated } = this.state;
+        const { auth_data } = this.props
         return (
             <Router>
-                <Routing authenticated={authenticated} />
+                <Routing auth_data={auth_data} />
             </Router>
         )
     }
@@ -32,8 +20,10 @@ class App extends React.Component {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const node = document.getElementById('auth_data');
+    const data = JSON.parse(node.getAttribute('data-auth'));
     ReactDOM.render(
-        <App />,
+        <App auth_data={data} />,
         document.body.appendChild(document.createElement("div"))
     )
 })

@@ -12,6 +12,7 @@ const languages = [
 ]
 
 const Header = (props) => {
+    const { user, authenticated } = props.auth_data
     const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
 
     return (
@@ -23,10 +24,10 @@ const Header = (props) => {
             <Navbar.Collapse id="twitterNav" className="justify-content-end">
                 <Nav>
                     {
-                        (props.user && props.user.authenticated) ?
-                            (<NavDropdown alignRight title={props.user.username} id="userDropdown">
+                        (user && authenticated) ?
+                            (<NavDropdown alignRight title={user.username} id="userDropdown">
                                 <NavDropdown.Item href="#">
-                                    {props.user.username}
+                                    {user.username}
                                 </NavDropdown.Item>
                                 <NavDropdown.Item onClick={props.logout()} href="#logout">
                                     Logout
