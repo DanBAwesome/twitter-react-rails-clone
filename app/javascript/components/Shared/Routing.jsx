@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import Dashboard from '../Dashboard/Dashboard';
 import Login from '../Login/Login';
-import Auth from './Auth';
 import Requests from './Requests';
 import Header from '../Layout/Header';
 
@@ -26,10 +25,6 @@ class Routing extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            user: null
-        };
-
         this.logout = this.logout.bind(this);
     }
 
@@ -39,28 +34,25 @@ class Routing extends React.Component {
         });
     }
 
-    authenticateUser() {
-        return Auth.AuthenticateUser().then((response) => {
-            this.setState({ user: response })
-        });
-    }
+    // authenticateUser() {
+    //     return Auth.AuthenticateUser().then((response) => {
+    //         this.setState({ user: response })
+    //     });
+    // }
 
     componentDidMount() {
-        this.authenticateUser().then(() => {
-            let { user } = this.state;
+        // this.authenticateUser().then(() => {
+        //     let { user } = this.state;
             
-            if (!user.authenticated) {
-                this.props.history.replace('/login');
-            }
-            else {
-                this.props.history.replace('/');
-            }
+        //     if (!user.authenticated) {
+        //         this.props.history.replace('/login');
+        //     }
 
-        }).finally(() => {
-            this.unlisten = this.props.history.listen((location, action) => {
-                this.authenticateUser();
-            })
-        })
+        // }).finally(() => {
+        //     this.unlisten = this.props.history.listen((location, action) => {
+        //         this.authenticateUser();
+        //     })
+        // })
     }
 
     componentWillUnmount() {
@@ -68,22 +60,18 @@ class Routing extends React.Component {
     }
 
     render() {
-        const { user } = this.state;
+        const { user, authenticated } = this.props.auth_data;
         return (
             <React.Fragment>
-                <Header user={user} logout={() => this.logout} />
+                <Header auth_data={this.props.auth_data} logout={() => this.logout} />
                 <Switch>
-                    {/* <ProtectedComponent path="/" exact authenticated={this.props.authenticated}>
-                        <Dashboard />
-                    </ProtectedComponent> */}
-                    <Route path="/login" component={Login} />
-                    <Route path="/" exact>
-                        <Dashboard user={user} />
-                    </Route>
+                    <Route path="/login" component={Login} exact/>
                     <Route path="/:username" render={(props) => {
                         return <Dashboard user={user} {...props}></Dashboard>
-                    }}>
-                    </Route>
+                    }} exact/>
+                    <ProtectedComponent path="/" exact authenticated={authenticated}>
+                        <Dashboard user={user}/>
+                    </ProtectedComponent>
                 </Switch>
             </React.Fragment>
         )
