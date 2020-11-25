@@ -47,9 +47,14 @@ class Login extends React.Component {
         this.setState({ signUp });
     }
 
-    login(event) {
-        let { username, password } = this.state.login;
-        event.preventDefault();
+    login(event, username, password) {
+        if (event) {
+            event.preventDefault();
+        }
+        if (!username || !password) {
+            username = this.state.login.username;
+            password = this.state.login.password;
+        }
         const data = new FormData();
 
         data.append('user[username]', username);
@@ -59,13 +64,16 @@ class Login extends React.Component {
             (response) => {
                 console.log(response.success);
                 if (response.success) {
-                    this.props.history.replace('/')
+                    window.location = '/';
                 }
             }
         );
     }
 
     signUp(event) {
+        if (event) {
+            event.preventDefault();
+        }
         let { username, email, password } = this.state.signUp;
 
         const data = new FormData();
@@ -75,7 +83,7 @@ class Login extends React.Component {
         data.append('user[password]', password);
 
         Requests.post('/users', data).then(() => {
-            this.login()
+            this.login(null, username, password)
         })
     }
 
